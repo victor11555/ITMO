@@ -1,0 +1,24 @@
+(require '[clojure.string :as str])
+;1-ignore
+(defn grep [template text ignore-case]
+  (def words (str/split template #"\|"))
+  (def all-text (str/split text #"\n"))
+  (condp = ignore-case
+    1 (doseq [i all-text j words]
+        (if (str/includes? (str/lower-case i)   (str/lower-case j))
+          (println i)
+        )
+      )
+    0 (doseq [i all-text j words]
+        (if (str/includes?  i j)
+          (println i)
+        )
+      )
+  )
+)
+
+(grep "dns|play" "jffjjdDns djjdjd
+djdjjd net 
+djhjdplaydjjd djjdjd
+net ddkd
+fjfjjfdns" 0)

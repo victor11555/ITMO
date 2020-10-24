@@ -1,0 +1,21 @@
+<component name="libraryTable">
+  <library name="graal1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/graal/launcher-common.jar!/" />
+      <root url="jar://$PROJECT_DIR$/graal/graaljs-launcher.jar!/" />
+      <root url="jar://$PROJECT_DIR$/graal/js-20.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/graal/graal-sdk.jar!/" />
+      <root url="jar://$PROJECT_DIR$/graal/asm-7.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/graal/truffle-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/graal/js-scriptengine-20.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/graal/asm-commons-7.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/graal/asm-analysis-7.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/graal/icu4j.jar!/" />
+      <root url="jar://$PROJECT_DIR$/graal/asm-util-7.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/graal/asm-tree-7.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/graal/tregex.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

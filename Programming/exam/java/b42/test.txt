@@ -1,0 +1,39 @@
+
+[list]
+   * Пункт 1.
+   * Пункт 2.
+   * Пункт 3.
+[/list]
+[ul]
+   [li] Пункт 1. [/li]
+   [li] Пункт 2. [/li]
+   [li] Пункт 3. [/li]
+[/ul]
+[ol]
+   [li] Пункт 1. [/li]
+   [li] Пункт 2. [/li]
+   [li] Пункт 3. [/li]
+[/ol]
+
+[color=red]Текст[/color]
+
+[color="#ff0000"]Текст[/color]
+
+[size=15]Текст[/size]
+[size="15px"]Текст[/size]
+
+[code]Текст[/code]
+
+[quote="имя автора текста"]Цитируемый текст[/quote]
+[quote]Цитируемый текст[/quote]
+
+[url=https://ru.wikipedia.org][img]https://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png[/img][/url]
+[img]https://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png[/img]
+[url]https://ru.wikipedia.org[/url]
+[url=https://ru.wikipedia.org]Текст[/url]
+
+[s][u][b][i]Текст[/i][/b][/u][/s]
+[s]Текст[/s]
+[u]Текст[/u]
+[i]text[/i]
+I would like to [b]emphasize[/b] this

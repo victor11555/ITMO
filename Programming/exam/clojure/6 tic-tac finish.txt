@@ -1,0 +1,287 @@
+(def qfield) 
+ 
+(defn qqfield [x] 
+  (do 
+    (def qfield (vec (range 1 (+ (* x x) 1))))
+    ))
+ 
+(defn lines [field x]
+  (cond 
+    (== x 3) (concat 
+              (partition-all 3 field)
+              (list 
+               (take-nth 3 field)
+               (take-nth 3 (drop 1 field))
+               (take-nth 3 (drop 2 field))
+               (take-nth 4 field)
+               (take-nth 2 (drop-last (drop 2 field))))) 
+    (== x 5) (concat 
+              (partition-all 5 field)
+              (list 
+               (take-nth 5 field)
+               (take-nth 5 (drop 1 field))
+               (take-nth 5 (drop 2 field))
+               (take-nth 5 (drop 3 field))
+               (take-nth 5 (drop 4 field))
+               (take-nth 6 field)
+               (take-nth 4 (drop-last (drop 4 field))))) 
+    :else (concat 
+           (partition-all 3 field)
+           (list 
+            (take-nth 3 field)
+            (take-nth 3 (drop 1 field))
+            (take-nth 3 (drop 2 field))
+            (take-nth 4 field)
+            (take-nth 2 (drop-last (drop 2 field))))))) 
+ 
+(defn line-win? [line]
+  (if (every? #{:x} line) :x
+    (if (every? #{:o} line) :o)))
+ 
+(defn winner? [field x]
+  (first (filter #{:x :o} (map line-win? (lines field x)))))
+ 
+(defn view-field [field x]
+  (cond
+    (== x 3) (let [field (map #(if (keyword? %) (subs (str %) 1) %) field)] 
+               (println (nth field 0) (nth field 1) (nth field 2)) 
+               (println (nth field 3) (nth field 4) (nth field 5)) 
+               (println (nth field 6) (nth field 7) (nth field 8)) 
+               ) 
+    (== x 5) (let [field (map #(if (keyword? %) (subs (str %) 1) %) field)] 
+               (println (nth field 0) (nth field 1) (nth field 2) (nth field 3) (nth field 4)) 
+               (println (nth field 5) (nth field 6) (nth field 7) (nth field 8) (nth field 9)) 
+               (println (nth field 10) (nth field 11) (nth field 12) (nth field 13) (nth field 14)) 
+               (println (nth field 15) (nth field 16) (nth field 17) (nth field 18) (nth field 19)) 
+               (println (nth field 20) (nth field 21) (nth field 22) (nth field 23) (nth field 24)) 
+               ))) 
+ 
+(defn name-player [player]
+  (subs (str player) 1)) 
+ 
+(defn over-game? [field]
+  (every? #{:x :o} field)) 
+ 
+(def player-symb (cycle [:x :o])) 
+ 
+(defn verify-tern [field x pl_type] 
+  (let [enter 
+    (cond 
+      (== pl_type 1) (try (. Integer parseInt (read-line)) (catch Exception e nil)) 
+      (== pl_type 2) (rand-int (+ (* x x) 1))
+      (== pl_type 3) 
+        (do
+          (let [field (map #(if (keyword? %) (subs (str %) 1) %) field)]
+            (first (filter (set (range 1 (+ (* x x) 1))) field))
+          )
+        )
+      :else (rand-int (+ (* x x) 1)))] 
+    (println "pl_type " pl_type)
+    (if (some #{enter} field) enter nil) 
+  )
+)
+
+(defn get-turn [player field pl_type x]
+  (println "Player" (name-player player) ", press keys: ") 
+  (loop [enter (verify-tern field x pl_type)]
+    (if enter 
+      (assoc field (dec enter) player)
+      (do
+        (recur (verify-tern field x pl_type))))))
+
+(def game)
+
+(defn start-game [field player-symb x type_one type_two] ;1-human 2-random 3-snake
+  (cond
+    (and (== type_one 1)(== type_two 1))
+    (loop [field field, player-symb player-symb]
+      (let [winner (winner? field x)]
+        (view-field field x)
+        (cond
+          winner (if (= (name-player winner) "x")
+                   (do (println "Player 1 wins!") (def game 1)) (do (println "Player 2 wins!") (def game 2)))
+          (over-game? field) (do (println "Draw") (def game 0))
+          :else
+          (recur
+            (get-turn (first player-symb) field 1 x)
+            (rest player-symb)))))
+    
+    (and (== type_one 1)(== type_two 2))
+    (loop [field field, player-symb player-symb]
+      (let [winner (winner? field x)]
+        (view-field field x)
+        (cond
+          winner (if (= (name-player winner) "x")
+                   (do (println "Player 1 wins!") (def game 1)) (do (println "Player 2 wins!") (def game 2)))
+          (over-game? field) (do (println "Draw") (def game 0))
+          :else
+          (recur
+            (do
+              (if (= (name-player (first player-symb)) "x") (def temp 1) (def temp 2))
+              (get-turn (first player-symb) field temp x))
+            (rest player-symb))
+          )))
+    
+    (and (== type_one 2)(== type_two 1))
+    (loop [field field, player-symb player-symb]
+      (let [winner (winner? field x)]
+        (view-field field x)
+        (cond
+          winner (if (= (name-player winner) "x")
+                   (do (println "Player 1 wins!") (def game 1)) (do (println "Player 2 wins!") (def game 2)))
+          (over-game? field) (do (println "Draw") (def game 0))
+          :else
+          (recur
+            (do
+              (if (= (name-player (first player-symb)) "x") (def temp 2) (def temp 1))
+              (get-turn (first player-symb) field temp x))
+            (rest player-symb))
+          )))
+
+    (and (== type_one 1)(== type_two 3))
+    (loop [field field, player-symb player-symb]
+      (let [winner (winner? field x)]
+        (view-field field x)
+        (cond
+          winner (if (= (name-player winner) "x")
+                   (do (println "Player 1 wins!") (def game 1)) (do (println "Player 2 wins!") (def game 2)))
+          (over-game? field) (do (println "Draw") (def game 0))
+          :else
+          (recur
+            (do
+              (if (= (name-player (first player-symb)) "x") (def temp 1) (def temp 3))
+              (get-turn (first player-symb) field temp x))
+            (rest player-symb))
+          )))
+    
+    (and (== type_one 3)(== type_two 1))
+    (loop [field field, player-symb player-symb]
+      (let [winner (winner? field x)]
+        (view-field field x)
+        (cond
+          winner (if (= (name-player winner) "x")
+                   (do (println "Player 1 wins!") (def game 1)) (do (println "Player 2 wins!") (def game 2)))
+          (over-game? field) (do (println "Draw") (def game 0))
+          :else
+          (recur
+            (do
+              (if (= (name-player (first player-symb)) "x") (def temp 3) (def temp 1))
+              (get-turn (first player-symb) field temp x))
+            (rest player-symb))
+          )))
+
+    (and (== type_one 2)(== type_two 3))
+    (loop [field field, player-symb player-symb]
+      (let [winner (winner? field x)]
+        (view-field field x)
+        (cond
+          winner (if (= (name-player winner) "x")
+                   (do (println "Player 1 wins!") (def game 1)) (do (println "Player 2 wins!") (def game 2)))
+          (over-game? field) (do (println "Draw") (def game 0))
+          :else
+          (recur
+            (do
+              (if (= (name-player (first player-symb)) "x") (def temp 2) (def temp 3))
+              (get-turn (first player-symb) field temp x))
+            (rest player-symb))
+          )))
+
+    (and (== type_one 3)(== type_two 2))
+    (loop [field field, player-symb player-symb]
+      (let [winner (winner? field x)]
+        (view-field field x)
+        (cond
+          winner (if (= (name-player winner) "x")
+                   (do (println "Player 1 wins!") (def game 1)) (do (println "Player 2 wins!") (def game 2)))
+          (over-game? field) (do (println "Draw") (def game 0))
+          :else
+          (recur
+            (do
+              (if (= (name-player (first player-symb)) "x") (def temp 3) (def temp 2))
+              (get-turn (first player-symb) field temp x))
+            (rest player-symb))
+          )))
+    
+    (and (== type_one 2)(== type_two 2))
+    (loop [field field, player-symb player-symb]
+      (let [winner (winner? field x)]
+        (view-field field x)
+        (cond
+          winner (if (= (name-player winner) "x")
+                   (do (println "Player 1 wins!") (def game 1)) (do (println "Player 2 wins!") (def game 2)))
+          (over-game? field) (do (println "Draw") (def game 0))
+          :else
+          (recur
+            (get-turn (first player-symb) field 2 x)
+            (rest player-symb)))))
+
+    (and (== type_one 3)(== type_two 3))
+    (loop [field field, player-symb player-symb]
+      (let [winner (winner? field x)]
+        (view-field field x)
+        (cond
+          winner (if (= (name-player winner) "x")
+                   (do (println "Player 1 wins!") (def game 1)) (do (println "Player 2 wins!") (def game 2)))
+          (over-game? field) (do (println "Draw") (def game 0))
+          :else
+          (recur
+            (get-turn (first player-symb) field 3 x)
+            (rest player-symb)))))
+  )
+)
+ 
+(defn players [player-count] 
+  (vec (range 1 (+ player-count 1)))) 
+ 
+(defn all-pairs [coll] 
+  (when-let [s (next coll)] 
+    (lazy-cat (for [y s] [(first coll) y]) 
+              (all-pairs s)))) 
+
+(defn matches [players] 
+  (all-pairs players))
+
+(defn tournament-verify [player-count] 
+  (loop [res 0, x player-count] 
+    (if (and (even? x) (not(== res 1))) 
+      (recur (/ x 2) res) 
+      (println res) 
+      )))
+ 
+(defn tournament [pl x] 
+  (let [couples (matches (players pl))] 
+    (qqfield x) 
+    (def points (into-array (vec (map (fn [_] 0) (range 1 (+ pl 1)))))) 
+    (doseq [i couples]
+      (println "The couple " i "is playing:" ) 
+      (start-game qfield player-symb x 1 3) 
+      (cond 
+        (== game 1) 
+        (do 
+          (def j (dec (first i))) 
+          (def buf (nth points j)) 
+          (def qbuf (+ buf 3)) 
+          (aset points j qbuf) 
+          ) 
+        (== game 2) 
+        (do 
+          (def j (dec (second i))) 
+          (def buf (nth points j)) 
+          (def qbuf (+ buf 3)) 
+          (aset points j qbuf) 
+          ) 
+        :else 
+        (do 
+          (def j (dec (first i))) 
+          (def buf (nth points j)) 
+          (def qbuf (+ buf 1)) 
+          (aset points j qbuf) 
+          (def k (dec (second i))) 
+          (def buf2 (nth points k)) 
+          (def qbuf2 (+ buf2 1)) 
+          (aset points k qbuf2) 
+          ))) 
+    (seq points) 
+    )) 
+ 
+(tournament 2 3)

@@ -1,0 +1,75 @@
+(require '[clojure.string :as str])
+
+(defn strtovec [s]
+  (let [v (str/split s #"\|"), res {}]
+    (loop [i 0]
+      (def items (str/split (get v i) #"\s+"))
+      (condp = (get items 0) 
+      "add"
+        (do
+          (assoc res (get items 1) (get items 2))
+          (recur (inc i))
+        )
+      "remove"
+        (dissoc res (get items 1))
+      nil (conj v "done")
+      (recur (inc i))
+      )
+    )
+  )
+)
+
+(def res {})
+
+(def size)
+
+(defn getsize [s]
+  (def count_s 0)
+  (let [v (str/split s #"\|")]
+    (doseq [i v]
+      (def items (str/split i #"\s+"))
+      (condp = (get items 0) 
+      "add"
+        (def count_s (inc count_s))
+      "remove"
+        (def count_s (inc count_s))
+      )
+    )
+  )
+  (def size (* 2 count_s))
+  ;(println size)
+)
+
+(defn qwe [s]
+  (let [v (str/split s #"\|")]
+    (getsize s)
+    ;(println "size is " size)
+    (def r (into-array Object (map (fn [_] nil) (range 1 size))))
+    (doseq [i v]
+      (def items (str/split i #"\s+"))
+      (condp = (get items 0) 
+      "add"
+        (do
+          ;(def qq (assoc res (read-string (get items 1)) (str (get items 2))))
+          (aset r (* 2 (read-string (get items 1))) (read-string (get items 1)))
+          (aset r (inc (* 2 (read-string (get items 1)))) (read-string (get items 2)))
+        )
+      "remove"
+        ;(dissoc res (read-string (get items 1)))
+        (do
+          (aset r (* 2 (read-string (get items 1))) nil)
+          (aset r (inc (* 2 (read-string (get items 1)))) nil)
+        )
+      )
+    )
+    (seq r)
+    (def qq (remove nil? (vec r)))
+    ;(println qq)
+    (def result (apply hash-map qq))
+    (println result)
+    ;(remove #(= (second %) nil) result)
+  )
+)
+
+(qwe "add 0 string_one|add 1 string_two|add 2 string_three|add 3 string_four|remove 0")
+;(size "add 0 string_one|add 1 string_two|add 2 string_three|add 3 string_four|remove 0")

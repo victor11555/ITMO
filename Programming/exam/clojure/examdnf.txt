@@ -1,0 +1,99 @@
+(require '[clojure.string :as str])
+
+(def pos 0)
+(def result)
+
+(defn Variable [alone]
+  (def result (concat result alone))
+)
+
+(defn Constant [alone]
+(def result (concat result alone))
+)
+
+(defn my_and [left, right]
+(def result (concat result left right))
+)
+
+(defn my_or [left, right]
+(def result (concat result left right))
+)
+
+(defn my_not [alone]
+(def result (concat result alone))
+)
+
+
+(defn parsExpr [expression]
+    (def lterm (parseTerm expression))
+    ;;skipBlank();
+    (while (and (< (inc pos) (count expression)) (= (nth expression pos) "&"))
+    (do
+    (println "here")
+        (inc pos);
+        (def rterm (parseTerm expression))
+        (def lterm (my_and lterm rterm));;def
+        ;;skipBlank()
+    ))
+    (def result(concat result lterm));;;;;
+)
+
+(defn parseTerm [expression]
+    (def lfactor (parseFactor expression));
+    ;;skipBlank();
+    (while (and (< (inc pos) (count expression)) (= (nth expression pos) "|"))
+    (do
+    (println "here")
+        (inc pos);
+        (def rfactor (parseFactor expression));
+        (def lfactor  (my_or lfactor rfactor));;def
+        ;;skipBlank();
+    ))
+    (def result(concat result lfactor));;;;;;;;;;;;;;
+)
+
+(defn parseFactor [expression]
+    ;;skipBlank();
+    (cond
+    (= (nth expression pos) "~")(do
+    (inc pos);
+      (println (my_not (parseFactor expression)));
+    )
+    (= (nth expression pos) "(")(do
+    ;;skipBlank();
+        (inc pos);
+        (def tmp (parsExpr expression));
+        ;;skipBlank();
+        (if (= (nth expression pos) ")")
+        (do
+            (inc pos);
+            (def result (concat result tmp));;;;;;;;;;
+        )
+        (println "Wrong brackets: " expression);;;;;;;;
+        )
+    )
+    (= (nth expression pos) "1")(do
+    (inc pos);
+    (Constant 1);;;;;;;;;
+    )
+    (= (nth expression pos) "0")(do
+    (inc pos);
+    (Constant 0);;;;;;;
+    )
+    (or ( = (nth expression pos) "a")( = (nth expression pos) "b")( = (nth expression pos) "c"))(do
+    (Variable (nth expression pos));сначала сделается потом увеличится;;;;;;;
+    )
+    :else (println "wrong factor"  expression pos);;;;;;;;;
+    )
+)
+
+
+(defn dnf [expression] 
+(def form (into-array Object (str/split expression #"\s+")))
+  (parsExpr form)
+)
+
+(dnf "a & ( b | ~ c)")
+(def log-chan (chan))
+
+(println result);;;;;

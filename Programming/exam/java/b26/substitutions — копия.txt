@@ -1,0 +1,5 @@
+qwerty = 123456
+qwe = 654
+deadbeef = badfood
+dead = alive
+lorem = Lorem ipsum

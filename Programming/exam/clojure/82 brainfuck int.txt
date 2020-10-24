@@ -1,0 +1,31 @@
+(defn code [& symb] (apply str symb))
+
+(defn goto-cycle [code same other func action]
+  (loop [i (action func) checked 0]
+    (condp = (nth code i)
+      same (recur (action i) (inc checked))
+      other (if (zero? checked) i (recur (action i) (dec checked)))
+      (recur (action i) checked))))
+
+(defn brainfuck [& symb]
+  (let [code (code symb)]
+  (loop [mem [0N], value 0, func 0]
+    (condp = (get code func)
+    \> (let [nextp (inc value), next-value (if (== nextp (count mem)) (conj mem 0N) mem)]
+      (recur next-value nextp (inc func)))
+    \<  (recur mem (dec value) (inc func))
+    \+  (recur (update-in mem [value] inc) value (inc func))
+    \-  (recur (update-in mem [value] dec) value (inc func))
+    \.  (do
+          (print (char (nth mem value)))
+          (recur mem value (inc func)))
+    \,  (let [ch (.read System/in)]
+          (recur (assoc mem value ch) value (inc func)))
+    \[ (recur mem value (inc 
+      (if (zero? (nth mem value))
+        (goto-cycle code \[ \] func inc) func)))
+    \] (recur mem value (goto-cycle code \] \[ func dec))
+    nil mem
+    (recur mem value (inc func))))))
+
+(brainfuck "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.")

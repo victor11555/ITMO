@@ -1,0 +1,34 @@
+(require '[clojure.string :as str])
+
+(def message "bombom")
+;Debug 0
+;Info 1
+;Warning 2
+;Error 3
+(def console-priority 0)
+(def html-priority 2)
+(def message-priority 0)
+
+(defn now [] 
+  (java.time.LocalDateTime/now)
+)
+
+(defn Console-Logger[message console-priority]
+  (if (>= console-priority message-priority)
+    (println (format "[%d] %s: %s" message-priority (now)message))
+    (println "Неверный приоритет")
+))
+
+(defn HTML-Logger[message console-priority]
+  (if (>= html-priority message-priority)
+    (println (format "<div style='padding: 5px; border: 1px gray solid'> <p style='font-size: 14px; font-weight: bold'>{%d}</p> <p style='font-style: italic'>{%s}:</p> <p>{%s}</p></div>" message-priority (now) message))
+    (println "Неверный приоритет")
+))
+
+(defn Composite-Logger[message console-priority html-priority]
+  (Console-Logger message console-priority)
+  (println)
+  (HTML-Logger message html-priority)
+)
+
+(Composite-Logger message console-priority html-priority)

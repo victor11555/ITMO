@@ -1,0 +1,58 @@
+(require '[clojure.string :as str])
+
+(defn code [& symb] (apply str symb))
+
+(defn goto-cycle [code same other func action]
+  (loop [i (action func) checked 0]
+    (condp = (nth code i)
+      same (recur (action i) (inc checked))
+      other (if (zero? checked) i (recur (action i) (dec checked)))
+      (recur (action i) checked))))
+
+(defn brainfuck [& symb]
+  (let [code (code symb)]
+  (loop [mem [0N], value 0, func 0]
+    (condp = (get code func)
+    \> (let [nextp (inc value), next-value (if (== nextp (count mem)) (conj mem 0N) mem)]
+      (recur next-value nextp (inc func)))
+    \<  (recur mem (dec value) (inc func))
+    \+  (recur (update-in mem [value] inc) value (inc func))
+    \-  (recur (update-in mem [value] dec) value (inc func))
+    \.  (do
+          (print (char (nth mem value)))
+          (recur mem value (inc func)))
+    \,  (let [ch (.read System/in)]
+          (recur (assoc mem value ch) value (inc func)))
+    \[ (recur mem value (inc 
+      (if (zero? (nth mem value))
+        (goto-cycle code \[ \] func inc) func)))
+    \] (recur mem value (goto-cycle code \] \[ func dec))
+    nil mem
+    (recur mem value (inc func))))))
+
+(defn spoon [symb]
+  (def v (into-array Object (str/split symb #"\s+")))
+  (seq v)
+  (def j 0)
+  (doseq [i v]
+    (condp = i
+      "1" (aset v j "+")
+      "000" (aset v j "-")
+      "010" (aset v j ">")
+      "011" (aset v j "<")
+      "00100" (aset v j "[")
+      "0011" (aset v j "]")
+      "0010110" (aset v j ",")
+      "001010" (aset v j ".")
+    )
+    (def j (inc j))
+  )
+  (seq v)
+  (def w (vec v))
+  ;(println (str/join w))
+  (brainfuck (str/join w))
+)
+
+;(brainfuck "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.")
+
+(spoon "1 1 1 1 1 1 1 1 1 1 00100 010 1 1 1 1 1 1 1 010 1 1 1 1 1 1 1 1 1 1 010 1 1 1 010 1 011 011 011 011 000 0011 010 1 1 001010 010 1 001010 1 1 1 1 1 1 1 001010 001010 1 1 1 001010 010 1 1 001010 011 011 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 001010 010 001010 1 1 1 001010 000 000 000 000 000 000 001010 000 000 000 000 000 000 000 000 001010 010 1 001010 010 001010")

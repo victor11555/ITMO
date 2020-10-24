@@ -1,0 +1,9 @@
+add 1000 qwe
+add 200 rty
+add 200 xux
+add 500 uio
+add 500 123
+add 500 456
+print 1.txt
+remove 200
+print 2.txt

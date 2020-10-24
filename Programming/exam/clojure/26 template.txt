@@ -1,0 +1,35 @@
+(require '[clojure.string :as str])
+
+(defn templator [template text]
+  (let [templates (str/split template #"\n")]
+    (def r (into-array Object (map (fn [_] nil) (range 1 (inc (* 2 (count templates)))))))
+    (def j 0)
+    (doseq [i templates]
+      (def items (str/split i #"="))
+      (do
+        (aset r j (apply str "$" (str/trim (get items 0))))
+        (aset r (inc j) (str/trim (get items 1)))
+      )
+      (def j (+ 2 j))
+    )
+  )
+  (def qq (remove nil? (vec r)))
+  (def all-text (into-array Object(str/split text #"\s+")))
+  (def s text)
+  (doseq [ j r i all-text]
+    (if (and (str/includes? i j) (even? (.indexOf qq j)))
+      (def s(str/replace s j (nth qq(inc(.indexOf qq j)))))
+    )
+  )
+  (println s)
+)
+
+(templator "qwerty = 123456
+qwe = 654
+deadbeef = badfood
+dead = alive
+lorem = Lorem ipsum" "$deadbeefh 123$qwetrrrr  high $qwertyh
+ddknfdk
+$loremh kdsjfhjdhsdkjh $deadh ghjgjhgjhghjg dfdf
+dfdfdfd
+$dead rererererererere")

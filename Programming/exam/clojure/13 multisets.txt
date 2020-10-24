@@ -1,0 +1,50 @@
+(defn mset [& args] 
+  (def multiset (vec []))
+  (apply conj multiset args)
+)
+
+(defn union [msetA msetB]
+  (into msetA msetB)
+)
+
+(defn add-el [mset e]
+  (conj mset e)
+)
+
+(defn remove-e [mset e]
+  (remove #{e} mset)
+)
+
+(defn dist [mset]
+  (def nmset (vec (distinct mset)))
+  (println nmset)
+)
+
+(defn equals [[x & msetA] [y & msetB]]
+  (let [c (compare x y)]
+    (if (zero? c) (recur msetA msetB) c)
+  )
+)
+
+(defn eq [msetA msetB]
+  (if (== 0 (compare msetA msetB)) (println "msets are equal.") (println "msets are'n equal."))
+)
+
+(defn intersect [msetA msetB]
+  (def s (into-array (vec (map (fn [_] nil) (range 1 (inc (count msetA)))))))
+  (doseq [x msetA y msetB]
+    (if (== 0 (compare x y))
+      (aset s (.indexOf msetA x) x)
+      ;(print x "")
+    )
+  )
+  (into [] s)
+)
+
+(defn qwe [msetA msetB]
+  (for [x msetA y msetB
+    :let [v (* x 1)] 
+    :when (zero? (compare x y))] v)
+)
+
+(qwe (mset 3 2 7 4) (mset 3 5 8 7))

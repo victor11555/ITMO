@@ -1,0 +1,113 @@
+(require '[clojure.string :as str])
+(import java.util.Locale)
+(import java.text.Collator)
+(def collator (Collator/getInstance (Locale. "pt_BR")))
+
+(defn change[flag content]
+  (condp = flag
+  "-b"
+    (do
+      (sort collator
+        (for [i content
+          :let [res (str/trim i)]]
+        res)
+      )
+    )
+  "-d"
+    (do
+      (sort collator
+        (for [i content
+          :let [res (do (.replaceAll i "[^0-9a-zA-Z ]" ""))]]
+        res)
+      )
+    )
+  "-f"
+    (do
+      (sort collator
+        (for [i content
+        :let [res (str/lower-case i)]]
+        res)
+      )
+    )
+  "-g"
+    (do
+      (sort 
+        (for [i content
+          :let [res (.replaceAll (str i) "[^0-9./e]" "")]]
+        res)
+      )
+    )
+  "-i"
+    (do
+      (sort collator
+        (for [i content
+          :let [res (do (.replaceAll i "[^A-Z ]" ""))]]
+        res)
+      )
+    )
+  "-n"
+    (do
+      (sort 
+        (for [i content
+          :let [res (.replaceAll i "[^0-9]" "")]]
+        res)
+      )
+    )
+  "-r" (seq (reverse (sort collator content)))
+  nil 
+    ;(do
+      (sort collator
+        (for [i content
+          :let [res i]]
+        res)
+      )
+    ;)
+  )
+)
+
+(defn editor [text]
+  (def all-text (vec (str/split text #"\n")))
+  (if (and (= "-" (subs (first all-text) 0 1)) (== 2 (count (first all-text))))
+    (do
+      (def v (into-array String (vec (next all-text))))
+    )
+    (do
+      (def v (into-array String (vec all-text)))
+    )
+  )
+
+  (def index 0)
+  (doseq [i v]
+    (def items (vec (str/split i #"\s")))
+    (if (and (= "-" (subs (first items) 0 1)) (== 2 (count (first items))))
+      (do
+        (def m (vec (next items)))
+        (def tmp (change (first items) m))
+        (aset v index (str/join " " tmp))
+      )
+      (do
+        (def m (vec items))
+        (def tmp (change nil m))
+        (aset v index (str/join " " tmp))
+      )
+    )
+    (def index (inc index))
+  )
+
+  ;(seq v)
+
+  (if (and (= "-" (subs (first all-text) 0 1)) (== 2 (count (first all-text))))
+    (do
+      ;(println (first all-text))
+      (change (first all-text) v)
+    )
+    (do
+      (change nil v)
+    )
+  )
+  (seq v)
+)
+
+(editor "-b
+-b aa4444LLo= WO10e4RLD bo0m=
+-b answ9e1r 13s")

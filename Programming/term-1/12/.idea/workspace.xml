@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="76e5c99b-4275-4a14-b9b2-978320008d2a" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1ZPBcYe9Ybo7HWJBkbdy4fP6kg2" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="RunManager" selected="Application.ParsTest">
+    <configuration name="Main test" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="expression.Main" />
+      <module name="12" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ParsTest" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="expression.ParserTest" />
+      <module name="12" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main test" />
+      <item itemvalue="Application.ParsTest" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="76e5c99b-4275-4a14-b9b2-978320008d2a" name="Default Changelist" comment="" />
+      <created>1584730928546</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1584730928546</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="147" y="46" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584734572404">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="147" y="46" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.768@0.0.1366.768" timestamp="1584734572404" />
+    <state x="496" y="100" key="#com.intellij.ide.util.MemberChooser" timestamp="1584734708706">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="496" y="100" key="#com.intellij.ide.util.MemberChooser/0.0.1366.768@0.0.1366.768" timestamp="1584734708706" />
+    <state x="130" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1584731552772">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="130" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1366.768@0.0.1366.768" timestamp="1584731552772" />
+    <state width="1324" height="228" key="GridCell.Tab.0.bottom" timestamp="1584983923195">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1324" height="228" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1584983923195" />
+    <state width="1324" height="228" key="GridCell.Tab.0.center" timestamp="1584983923191">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1324" height="228" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1584983923191" />
+    <state width="1324" height="228" key="GridCell.Tab.0.left" timestamp="1584983923189">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1324" height="228" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1584983923189" />
+    <state width="1324" height="228" key="GridCell.Tab.0.right" timestamp="1584983923193">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1324" height="228" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1584983923193" />
+    <state width="1324" height="228" key="GridCell.Tab.1.bottom" timestamp="1584983923202">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1324" height="228" key="GridCell.Tab.1.bottom/0.0.1366.768@0.0.1366.768" timestamp="1584983923202" />
+    <state width="1324" height="228" key="GridCell.Tab.1.center" timestamp="1584983923199">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1324" height="228" key="GridCell.Tab.1.center/0.0.1366.768@0.0.1366.768" timestamp="1584983923199" />
+    <state width="1324" height="228" key="GridCell.Tab.1.left" timestamp="1584983923197">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1324" height="228" key="GridCell.Tab.1.left/0.0.1366.768@0.0.1366.768" timestamp="1584983923197" />
+    <state width="1324" height="228" key="GridCell.Tab.1.right" timestamp="1584983923201">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1324" height="228" key="GridCell.Tab.1.right/0.0.1366.768@0.0.1366.768" timestamp="1584983923201" />
+    <state x="376" y="216" key="com.intellij.ide.util.TipDialog" timestamp="1585642289770">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="376" y="216" key="com.intellij.ide.util.TipDialog/0.0.1366.768@0.0.1366.768" timestamp="1585642289770" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/expression/ExpressionParser.java</url>
+          <line>9</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="src">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/Md2HtmlMarkTest.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/Md2HtmlTest.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/Md2HtmlUnderlineTest.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
